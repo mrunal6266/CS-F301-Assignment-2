@@ -86,3 +86,8 @@ main :-
     once(solution([1,2,3,4,5,6,7,8], S)),
     forall(member(p(Name, Dept, Lang, Proj), S),
            format("~w = [~w, ~w, ~w]~n", [Name, Dept, Lang, Proj])).
+% count_solutions(+Active, -N)
+% N is the number of solutions that satisfy exactly the clues in Active
+% and ignore all the others.
+count_solutions(Active, N) :-
+    aggregate_all(count, solution(Active, _), N).
