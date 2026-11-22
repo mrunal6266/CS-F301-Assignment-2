@@ -71,8 +71,8 @@
     (define len (my-length lst))             ; measure BEFORE any change
     (define processed                        ; recurse into sublists
       (my-map (lambda (elem)
-                (if (pair? elem)
-                    (inserter elem)          ; sublist: apply inserter recursively
+                (if (or (pair? elem) (null? elem))
+                    (inserter elem)          ; list (including empty): recurse
                     elem))                   ; atom: leave unchanged
               lst))
     (if (len-ok? len)

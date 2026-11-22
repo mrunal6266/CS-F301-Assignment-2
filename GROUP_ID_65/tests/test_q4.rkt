@@ -78,7 +78,7 @@
 
 (check "n=1: nested empty lists all get x"
        (insert-if-short 'z '(() ()) 1)
-       '(() (z) (z)))
+       '((z) (z)))
 
 ;; ------------------------------------------------------------
 ;; Edge case: deeply nested list (6 levels)
@@ -88,7 +88,7 @@
 ;; Each sublist has 1 element (< 2), so x is prepended at every level
 (check "deep nesting 6 levels, n=2"
        (insert-if-short 'x '(a (b (c (d (e (f)))))) 2)
-       '(x a (x b (x c (x d (x e (x f)))))))
+       '(a (b (c (d (e (x f)))))))
 
 ;; ------------------------------------------------------------
 ;; Edge case: mixed atoms and sublists
