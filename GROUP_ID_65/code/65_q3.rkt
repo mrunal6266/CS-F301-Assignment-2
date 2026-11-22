@@ -43,3 +43,9 @@
   (display (postorder-acc tree '()))
   (newline))
 
+; height of () = 0
+; height of (v l r) = 1 + max(height l, height r)
+(define (tree-height tree)
+  (if (null? tree)
+      0
+      (+ 1 (max (tree-height (cadr tree)) (tree-height (caddr tree))))))
