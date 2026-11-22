@@ -46,3 +46,19 @@ clue(3, S) :-
 clue(4, S) :-
     member(p('Ben', Dept, _, web), S),
     Dept \== testing.
+
+% CLUE 5: The friend whose favorite language is Java works in the design
+% department.
+% Reading: some friend has both java as their language and design as
+% their department.
+clue(5, S) :-
+    member(p(_, design, java, _), S).
+
+% CLUE 6: Carla's project preference is not embedded, and her department
+% is not development.
+% Reading: Carla's project is not embedded and Carla's department is not
+% development.
+clue(6, S) :-
+    member(p('Carla', Dept, _, Proj), S),
+    Proj \== embedded,
+    Dept \== development.
