@@ -92,4 +92,13 @@
 ;; (print-insert-result) -> void
 ;; ------------------------------------------------------------
 
-; TODO: implement print-insert-result
+; print-insert-result: -> void
+; Reads x, lst, n (in that order) from standard input using read.
+; Calls (insert-if-short x lst n) and prints the result with display,
+; followed by a newline. Prints no prompt or any other text.
+(define (print-insert-result)
+  (define x   (read))
+  (define lst (read))
+  (define n   (read))
+  (display (insert-if-short x lst n))
+  (newline))
