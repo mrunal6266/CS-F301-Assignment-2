@@ -49,40 +49,40 @@
 
 
 ;; ------------------------------------------------------------
-;; SECTION 3: insert-if-short
-;; Inserts atom x at the front of every list (at every level
-;; of nesting) whose top-level length is strictly less than n.
-;; Length is measured on the original list before any insertion.
+;; SECTION 3 + 4: make-inserter and insert-if-short
+;; make-inserter is a higher-order function: given atom x and
+;; predicate len-ok?, it returns a function (inserter) that
+;; inserts x at the front of every list (at every nesting level)
+;; whose top-level length satisfies len-ok?.
+;; insert-if-short is defined using make-inserter (one definition only).
+;; (make-inserter x len-ok?) -> (list -> list)
 ;; (insert-if-short x lst n) -> list
 ;; ------------------------------------------------------------
 
+; make-inserter: atom (integer -> boolean) -> (list -> list)
+; Declarative reading: returns an inserter function that, given a list,
+; measures its length (before any change), recursively processes each
+; sublist element through the same inserter, and prepends x if
+; (len-ok? len) holds.
+(define (make-inserter x len-ok?)
+  (define (inserter lst)
+    (define len (my-length lst))             ; measure BEFORE any change
+    (define processed                        ; recurse into sublists
+      (my-map (lambda (elem)
+                (if (pair? elem)
+                    (inserter elem)          ; sublist: apply inserter recursively
+                    elem))                   ; atom: leave unchanged
+              lst))
+    (if (len-ok? len)
+        (cons x processed)                   ; length satisfies predicate: prepend x
+        processed))                          ; does not satisfy: return as-is
+  inserter)
+
 ; insert-if-short: atom list integer -> list
-; Declarative reading: for every list at every level of nesting,
-; if its top-level length (measured BEFORE insertion) is < n,
-; prepend x to it. Atoms are left unchanged.
+; Defined using make-inserter with the predicate (< len n).
+; This is the single, final definition of insert-if-short.
 (define (insert-if-short x lst n)
-  (define len (my-length lst))                  ; measure BEFORE any change
-  (define processed                             ; recurse into sublists
-    (my-map (lambda (elem)
-              (if (pair? elem)
-                  (insert-if-short x elem n)    ; elem is a sublist: recurse
-                  elem))                        ; elem is an atom: leave it
-            lst))
-  (if (< len n)
-      (cons x processed)                        ; length qualifies: prepend x
-      processed))                               ; length does not qualify
-
-
-;; ------------------------------------------------------------
-;; SECTION 4: make-inserter
-;; Higher-order function. Returns a function (of one list arg)
-;; that inserts x at the front of every list whose length
-;; satisfies the predicate len-ok?.
-;; (make-inserter x len-ok?) -> (list -> list)
-;; ------------------------------------------------------------
-
-; TODO: implement make-inserter
-; TODO: redefine insert-if-short using make-inserter (one final definition only)
+  ((make-inserter x (lambda (len) (< len n))) lst))
 
 
 ;; ------------------------------------------------------------
