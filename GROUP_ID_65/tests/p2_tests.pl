@@ -7,70 +7,70 @@
 
 % ---------- expr_string/2: the PDF's parenthesis examples ----------
 check(print_paren_left_lower, yes,
-      expr_string(op(*, op(+, num(4), num(2)), num(3)), "(4+2)*3")).
+      expr_string(op('*', op('+', num(4), num(2)), num(3)), "(4+2)*3")).
 check(print_no_paren_right_higher, yes,
-      expr_string(op(+, num(4), op(*, num(2), num(3))), "4+2*3")).
+      expr_string(op('+', num(4), op('*', num(2), num(3))), "4+2*3")).
 check(print_left_same_level_no_paren, yes,
-      expr_string(op(*, op(/, num(8), num(4)), num(2)), "8/4*2")).
+      expr_string(op('*', op('/', num(8), num(4)), num(2)), "8/4*2")).
 check(print_right_same_level_paren, yes,
-      expr_string(op(/, num(8), op(*, num(4), num(2))), "8/(4*2)")).
+      expr_string(op('/', num(8), op('*', num(4), num(2))), "8/(4*2)")).
 check(print_sub_left_assoc, yes,
-      expr_string(op(-, op(-, num(1), num(2)), num(3)), "1-2-3")).
+      expr_string(op('-', op('-', num(1), num(2)), num(3)), "1-2-3")).
 check(print_sub_right_paren, yes,
-      expr_string(op(-, num(1), op(-, num(2), num(3))), "1-(2-3)")).
+      expr_string(op('-', num(1), op('-', num(2), num(3))), "1-(2-3)")).
 check(print_add_right_paren, yes,
-      expr_string(op(+, num(1), op(+, num(2), num(3))), "1+(2+3)")).
+      expr_string(op('+', num(1), op('+', num(2), num(3))), "1+(2+3)")).
 check(print_add_left_assoc, yes,
-      expr_string(op(+, op(+, num(1), num(2)), num(3)), "1+2+3")).
+      expr_string(op('+', op('+', num(1), num(2)), num(3)), "1+2+3")).
 check(print_equation_side, yes,
-      expr_string(op(*, num(2), op(-, num(5), num(3))), "2*(5-3)")).
+      expr_string(op('*', num(2), op('-', num(5), num(3))), "2*(5-3)")).
 check(print_both_operands_paren, yes,
-      expr_string(op(*, op(+, num(1), num(2)), op(-, num(3), num(4))),
+      expr_string(op('*', op('+', num(1), num(2)), op('-', num(3), num(4))),
                   "(1+2)*(3-4)")).
 check(print_number_is_string_no_paren, yes,
       ( expr_string(num(42), S), string(S), S == "42" )).
 check(print_zero, yes,
       expr_string(num(0), "0")).
 check(print_assoc_trees_differ, yes,
-      ( expr_string(op(+, num(1), op(+, num(2), num(3))), S1),
-        expr_string(op(+, op(+, num(1), num(2)), num(3)), S2),
+      ( expr_string(op('+', num(1), op('+', num(2), num(3))), S1),
+        expr_string(op('+', op('+', num(1), num(2)), num(3)), S2),
         S1 \== S2 )).
 
 % ---------- eval/2 ----------
 check(eval_number, yes,
       eval(num(7), 7)).
 check(eval_mixed, yes,
-      eval(op(*, op(+, num(4), num(2)), num(3)), 18)).
+      eval(op('*', op('+', num(4), num(2)), num(3)), 18)).
 check(eval_exact_division, yes,
-      eval(op(/, num(8), num(4)), 2)).
+      eval(op('/', num(8), num(4)), 2)).
 check(eval_exact_division_nested, yes,
-      eval(op(*, op(/, num(8), num(4)), num(2)), 4)).
+      eval(op('*', op('/', num(8), num(4)), num(2)), 4)).
 check(eval_inexact_division_fails, no,
-      eval(op(/, num(7), num(2)), _)).
+      eval(op('/', num(7), num(2)), _)).
 check(eval_zero_divisor_fails, no,
-      eval(op(/, num(5), num(0)), _)).
+      eval(op('/', num(5), num(0)), _)).
 check(eval_zero_over_zero_fails, no,
-      eval(op(/, num(0), num(0)), _)).
+      eval(op('/', num(0), num(0)), _)).
 check(eval_zero_numerator_ok, yes,
-      eval(op(/, num(0), num(5)), 0)).
+      eval(op('/', num(0), num(5)), 0)).
 check(eval_zero_divisor_from_subtree_fails, no,
-      eval(op(/, op(+, num(1), num(2)), op(-, num(3), num(3))), _)).
+      eval(op('/', op('+', num(1), num(2)), op('-', num(3), num(3))), _)).
 check(eval_bad_division_deep_fails, no,
-      eval(op(+, num(1),
-              op(*, num(2),
-                 op(-, num(9), op(/, num(7), num(2))))), _)).
+      eval(op('+', num(1),
+              op('*', num(2),
+                 op('-', num(9), op('/', num(7), num(2))))), _)).
 check(eval_bad_division_times_zero_fails, no,
-      eval(op(*, num(0), op(/, num(1), num(2))), _)).
+      eval(op('*', num(0), op('/', num(1), num(2))), _)).
 check(eval_negative_intermediate, yes,
-      eval(op(-, num(3), num(5)), -2)).
+      eval(op('-', num(3), num(5)), -2)).
 check(eval_negative_times, yes,
-      eval(op(*, op(-, num(3), num(5)), num(4)), -8)).
+      eval(op('*', op('-', num(3), num(5)), num(4)), -8)).
 check(eval_negative_exact_division, yes,
-      eval(op(/, op(-, num(3), num(9)), num(3)), -2)).
+      eval(op('/', op('-', num(3), num(9)), num(3)), -2)).
 check(eval_division_by_negative, yes,
-      eval(op(/, num(6), op(-, num(1), num(4))), -2)).
+      eval(op('/', num(6), op('-', num(1), num(4))), -2)).
 check(eval_negative_inexact_fails, no,
-      eval(op(/, op(-, num(3), num(8)), num(2)), _)).
+      eval(op('/', op('-', num(3), num(8)), num(2)), _)).
 
 % ---------- expr_tree/2 ----------
 check(tree_empty_fails, no,
@@ -87,8 +87,8 @@ check(tree_no_duplicates, yes,
       ( findall(T, expr_tree([1, 2, 3, 4], T), Ts),
         sort(Ts, Sorted), length(Ts, N), length(Sorted, N) )).
 check(tree_both_associations_present, yes,
-      ( expr_tree([1, 2, 3], op(+, op(+, num(1), num(2)), num(3))),
-        expr_tree([1, 2, 3], op(+, num(1), op(+, num(2), num(3)))) )).
+      ( expr_tree([1, 2, 3], op('+', op('+', num(1), num(2)), num(3))),
+        expr_tree([1, 2, 3], op('+', num(1), op('+', num(2), num(3)))) )).
 
 % ---------- generate_equation/2: PDF examples ----------
 check(gen_4253_is_one_of_seven, yes,
