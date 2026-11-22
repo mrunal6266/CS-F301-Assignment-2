@@ -18,3 +18,10 @@
   (display (inorder-acc tree '()))
   (newline))
 
+; preorder of () = acc
+; preorder of (v l r) onto acc = v . (preorder l onto (preorder r onto acc))
+(define (preorder-acc tree acc)
+  (if (null? tree)
+      acc
+      (cons (car tree)
+            (preorder-acc (cadr tree) (preorder-acc (caddr tree) acc)))))
