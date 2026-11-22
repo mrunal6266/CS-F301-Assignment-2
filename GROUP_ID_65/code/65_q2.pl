@@ -68,3 +68,21 @@ expr_tree(List, op(Op, Left, Right)) :-
     expr_tree(Prefix, Left),
     expr_tree(Suffix, Right),
     member(Op, [+, -, *, /]).
+
+% generate_equation(+List, -Equation)
+% Equation is the canonical string "L=R" of one valid equation for List:
+% L is an expression over a non-empty prefix of List, R is an expression over
+% the remaining non-empty suffix, and L and R have the same integer value.
+% Fails if List has no valid equation (including lengths 0 and 1).
+generate_equation(List, Equation) :-
+    once(( append(Prefix, Suffix, List),
+           Prefix = [_|_],
+           Suffix = [_|_],
+           expr_tree(Prefix, Left),
+           eval(Left, Value),
+           expr_tree(Suffix, Right),
+           eval(Right, Value),
+           expr_string(Left, LeftStr),
+           expr_string(Right, RightStr),
+           format(string(Equation), "~w=~w", [LeftStr, RightStr])
+         )).
