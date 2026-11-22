@@ -79,14 +79,14 @@ clue(7, S) :-
 clue(8, S) :-
     member(p(_, research, Lang, data), S),
     Lang \== javascript.
-% main
-% Prints one solution of clues 1 to 8, one line per friend, in the order
-% Alex, Ben, Carla, Dana.
 
 % CLUE 9: The friend who prefers the AI project works in the testing department.
 clue(9, S) :-
     member(p(_, testing, _, 'AI'), S).
-    
+
+% main
+% Prints one solution of clues 1 to 8, one line per friend, in the order
+% Alex, Ben, Carla, Dana.
 main :-
     once(solution([1,2,3,4,5,6,7,8], S)),
     forall(member(p(Name, Dept, Lang, Proj), S),
