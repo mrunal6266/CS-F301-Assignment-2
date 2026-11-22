@@ -62,7 +62,7 @@ clue(6, S) :-
     member(p('Carla', Dept, _, Proj), S),
     Proj \== embedded,
     Dept \== development.
-    
+
 % CLUE 7: Dana's favorite language is not Java, and she works in research
 % or testing.
 % Reading: Dana's language is not java and Dana's department is one of
@@ -79,3 +79,10 @@ clue(7, S) :-
 clue(8, S) :-
     member(p(_, research, Lang, data), S),
     Lang \== javascript.
+% main
+% Prints one solution of clues 1 to 8, one line per friend, in the order
+% Alex, Ben, Carla, Dana.
+main :-
+    once(solution([1,2,3,4,5,6,7,8], S)),
+    forall(member(p(Name, Dept, Lang, Proj), S),
+           format("~w = [~w, ~w, ~w]~n", [Name, Dept, Lang, Proj])).
