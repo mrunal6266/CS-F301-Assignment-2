@@ -106,3 +106,10 @@ all_equations(List, Equations) :-
             ),
             Found),
     sort(Found, Equations).
+
+% count_equations(+List, -N)
+% N is the number of valid equations for List, i.e. the length of the list
+% Equations for which all_equations(List, Equations) holds.
+count_equations(List, N) :-
+    all_equations(List, Equations),
+    length(Equations, N).
