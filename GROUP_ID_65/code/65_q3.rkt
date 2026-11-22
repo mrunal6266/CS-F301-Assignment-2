@@ -63,4 +63,9 @@
 (define (count-leaves tree)
   (count-leaves-acc tree 0))
 
+; print-height-and-leaves: display (height leaf-count), then a newline
+(define (print-height-and-leaves tree)
+  (display (list (tree-height tree) (count-leaves tree)))
+  (newline))
+ 
 
