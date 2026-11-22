@@ -25,6 +25,7 @@
       acc
       (cons (car tree)
             (preorder-acc (cadr tree) (preorder-acc (caddr tree) acc)))))
+
 ; postorder of () = acc
 ; postorder of (v l r) onto acc = postorder l onto (postorder r onto (v . acc))
 (define (postorder-acc tree acc)
@@ -32,4 +33,13 @@
       acc
       (postorder-acc (cadr tree)
                      (postorder-acc (caddr tree) (cons (car tree) acc)))))
+
+; print-all-traversals: inorder, preorder and postorder lists, one per line
+(define (print-all-traversals tree)
+  (display (inorder-acc tree '()))
+  (newline)
+  (display (preorder-acc tree '()))
+  (newline)
+  (display (postorder-acc tree '()))
+  (newline))
 
