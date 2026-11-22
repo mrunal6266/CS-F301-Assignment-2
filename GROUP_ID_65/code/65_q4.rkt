@@ -37,7 +37,15 @@
 ;; (my-map f lst) -> list
 ;; ------------------------------------------------------------
 
-; TODO: implement my-map
+; my-map: (a -> b) list -> list
+; Declarative reading: mapping over an empty list gives an empty list;
+; mapping over a non-empty list gives (f (car lst)) consed onto
+; the result of mapping over the tail.
+(define (my-map f lst)
+  (if (null? lst)
+      '()
+      (cons (f (car lst))
+            (my-map f (cdr lst)))))
 
 
 ;; ------------------------------------------------------------
