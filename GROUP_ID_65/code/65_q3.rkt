@@ -25,3 +25,11 @@
       acc
       (cons (car tree)
             (preorder-acc (cadr tree) (preorder-acc (caddr tree) acc)))))
+; postorder of () = acc
+; postorder of (v l r) onto acc = postorder l onto (postorder r onto (v . acc))
+(define (postorder-acc tree acc)
+  (if (null? tree)
+      acc
+      (postorder-acc (cadr tree)
+                     (postorder-acc (caddr tree) (cons (car tree) acc)))))
+
