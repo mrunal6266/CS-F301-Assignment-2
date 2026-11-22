@@ -30,3 +30,27 @@ expr_string(op(Op, Left, Right), String) :-
     ;   RightStr = RightStr0
     ),
     format(string(String), "~w~w~w", [LeftStr, Op, RightStr]).
+
+% eval(+Tree, -Value)
+% Value is the integer value of expression Tree, and every division inside
+% Tree has a non-zero divisor and leaves no remainder. Fails if some
+% division in Tree is invalid.
+eval(num(N), N).
+eval(op(+, Left, Right), Value) :-
+    eval(Left, LeftVal),
+    eval(Right, RightVal),
+    Value is LeftVal + RightVal.
+eval(op(-, Left, Right), Value) :-
+    eval(Left, LeftVal),
+    eval(Right, RightVal),
+    Value is LeftVal - RightVal.
+eval(op(*, Left, Right), Value) :-
+    eval(Left, LeftVal),
+    eval(Right, RightVal),
+    Value is LeftVal * RightVal.
+eval(op(/, Left, Right), Value) :-
+    eval(Left, LeftVal),
+    eval(Right, RightVal),
+    RightVal =\= 0,
+    LeftVal mod RightVal =:= 0,
+    Value is LeftVal // RightVal.
