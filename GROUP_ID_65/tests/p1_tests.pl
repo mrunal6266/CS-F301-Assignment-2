@@ -1,6 +1,6 @@
-% Tests for P1 (GROUP_ID_65_q1.pl), written with SWI-Prolog's plunit.
+% Tests for P1 (65_q1.pl), written with SWI-Prolog's plunit.
 % Run from the repo root:
-%   swipl -q -f GROUP_ID_65/code/GROUP_ID_65_q1.pl -s GROUP_ID_65/tests/p1_tests.pl -g run_tests -t halt
+%   swipl -q -f GROUP_ID_65/code/65_q1.pl -s GROUP_ID_65/tests/p1_tests.pl -g run_tests -t halt
 
 :- use_module(library(plunit)).
 :- use_module(library(lists)).
