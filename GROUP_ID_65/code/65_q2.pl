@@ -54,3 +54,17 @@ eval(op(/, Left, Right), Value) :-
     RightVal =\= 0,
     LeftVal mod RightVal =:= 0,
     Value is LeftVal // RightVal.
+
+% expr_tree(+List, -Tree)
+% Tree is an expression tree whose leaves, read left to right, are exactly
+% the numbers of the non-empty List, each used once: either num(N) for a
+% one-element list, or op(Op, Left, Right) where Left and Right are trees
+% over a non-empty prefix and the remaining non-empty suffix of List.
+expr_tree([N], num(N)).
+expr_tree(List, op(Op, Left, Right)) :-
+    append(Prefix, Suffix, List),
+    Prefix = [_|_],
+    Suffix = [_|_],
+    expr_tree(Prefix, Left),
+    expr_tree(Suffix, Right),
+    member(Op, [+, -, *, /]).
