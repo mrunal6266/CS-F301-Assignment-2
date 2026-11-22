@@ -56,7 +56,21 @@
 ;; (insert-if-short x lst n) -> list
 ;; ------------------------------------------------------------
 
-; TODO: implement insert-if-short
+; insert-if-short: atom list integer -> list
+; Declarative reading: for every list at every level of nesting,
+; if its top-level length (measured BEFORE insertion) is < n,
+; prepend x to it. Atoms are left unchanged.
+(define (insert-if-short x lst n)
+  (define len (my-length lst))                  ; measure BEFORE any change
+  (define processed                             ; recurse into sublists
+    (my-map (lambda (elem)
+              (if (pair? elem)
+                  (insert-if-short x elem n)    ; elem is a sublist: recurse
+                  elem))                        ; elem is an atom: leave it
+            lst))
+  (if (< len n)
+      (cons x processed)                        ; length qualifies: prepend x
+      processed))                               ; length does not qualify
 
 
 ;; ------------------------------------------------------------
