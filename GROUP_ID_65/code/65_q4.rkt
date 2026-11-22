@@ -12,6 +12,8 @@
 ;;   - No output is printed when this file is loaded.
 ;; ============================================================
 
+(provide (all-defined-out))
+
 
 ;; ------------------------------------------------------------
 ;; SECTION 1: my-length
