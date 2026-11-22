@@ -19,7 +19,16 @@
 ;; (my-length lst) -> integer
 ;; ------------------------------------------------------------
 
-; TODO: implement my-length
+; my-length: list -> integer
+; Declarative reading: the length of an empty list is 0;
+; the length of a non-empty list is 1 plus the length of its tail.
+; Tail-recursive via an accumulator.
+(define (my-length lst)
+  (define (my-length-iter l acc)
+    (if (null? l)
+        acc
+        (my-length-iter (cdr l) (+ acc 1))))
+  (my-length-iter lst 0))
 
 
 ;; ------------------------------------------------------------
