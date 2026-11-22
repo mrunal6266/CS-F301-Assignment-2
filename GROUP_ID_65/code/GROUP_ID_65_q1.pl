@@ -34,4 +34,15 @@ clue(2, S) :-
     member(p('Alex', Dept, Lang, _), S),
     Dept \== development,
     Lang \== 'c++'.
+    
+% CLUE 3: The friend working in the testing department likes Python.
+% Reading: the friend whose department is testing has python as their
+% favorite language.
+clue(3, S) :-
+    member(p(_, testing, python, _), S).
 
+% CLUE 4: Ben prefers web projects and does not work in testing.
+% Reading: Ben's project is web and Ben's department is not testing.
+clue(4, S) :-
+    member(p('Ben', Dept, _, web), S),
+    Dept \== testing.
