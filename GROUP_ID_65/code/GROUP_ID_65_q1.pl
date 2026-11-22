@@ -62,3 +62,20 @@ clue(6, S) :-
     member(p('Carla', Dept, _, Proj), S),
     Proj \== embedded,
     Dept \== development.
+    
+% CLUE 7: Dana's favorite language is not Java, and she works in research
+% or testing.
+% Reading: Dana's language is not java and Dana's department is one of
+% research or testing.
+clue(7, S) :-
+    member(p('Dana', Dept, Lang, _), S),
+    Lang \== java,
+    memberchk(Dept, [research, testing]).
+
+% CLUE 8: The friend who prefers data projects works in research and does
+% not use JavaScript.
+% Reading: the friend whose project is data has research as their
+% department and a language other than javascript.
+clue(8, S) :-
+    member(p(_, research, Lang, data), S),
+    Lang \== javascript.
