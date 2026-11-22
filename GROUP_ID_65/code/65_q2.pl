@@ -1,10 +1,10 @@
 % prec(?Op, ?Level)
 % Level is the binding strength of operator Op: + and - bind at level 1,
 % * and / bind tighter, at level 2.
-prec(+, 1).
-prec(-, 1).
-prec(*, 2).
-prec(/, 2).
+prec('+', 1).
+prec('-', 1).
+prec('*', 2).
+prec('/', 2).
 
 % expr_string(+Tree, -String)
 % String is the canonical, space-free SWI-Prolog string of expression Tree,
@@ -36,19 +36,19 @@ expr_string(op(Op, Left, Right), String) :-
 % Tree has a non-zero divisor and leaves no remainder. Fails if some
 % division in Tree is invalid.
 eval(num(N), N).
-eval(op(+, Left, Right), Value) :-
+eval(op('+', Left, Right), Value) :-
     eval(Left, LeftVal),
     eval(Right, RightVal),
     Value is LeftVal + RightVal.
-eval(op(-, Left, Right), Value) :-
+eval(op('-', Left, Right), Value) :-
     eval(Left, LeftVal),
     eval(Right, RightVal),
     Value is LeftVal - RightVal.
-eval(op(*, Left, Right), Value) :-
+eval(op('*', Left, Right), Value) :-
     eval(Left, LeftVal),
     eval(Right, RightVal),
     Value is LeftVal * RightVal.
-eval(op(/, Left, Right), Value) :-
+eval(op('/', Left, Right), Value) :-
     eval(Left, LeftVal),
     eval(Right, RightVal),
     RightVal =\= 0,
@@ -67,7 +67,7 @@ expr_tree(List, op(Op, Left, Right)) :-
     Suffix = [_|_],
     expr_tree(Prefix, Left),
     expr_tree(Suffix, Right),
-    member(Op, [+, -, *, /]).
+    member(Op, ['+', '-', '*', '/']).
 
 % generate_equation(+List, -Equation)
 % Equation is the canonical string "L=R" of one valid equation for List:
