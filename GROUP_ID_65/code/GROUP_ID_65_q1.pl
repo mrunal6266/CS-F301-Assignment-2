@@ -15,3 +15,23 @@ solution(Active, S) :-
     permutation([python, java, 'c++', javascript],        [L1, L2, L3, L4]),
     permutation(['AI', web, embedded, data],              [P1, P2, P3, P4]),
     forall(member(N, Active), clue(N, S)).
+% clue(+N, +S)
+% Clue N holds in the fully filled-in solution S.
+
+% CLUE 1: The friend who prefers the AI project does not work in research
+% and is not Dana.
+% Reading: the friend whose project is 'AI' has a department other than
+% research and a name other than 'Dana'.
+clue(1, S) :-
+    member(p(Name, Dept, _, 'AI'), S),
+    Dept \== research,
+    Name \== 'Dana'.
+
+% CLUE 2: Alex does not work in development and does not prefer C++.
+% Reading: Alex's department is not development and Alex's favorite
+% language is not 'c++'.
+clue(2, S) :-
+    member(p('Alex', Dept, Lang, _), S),
+    Dept \== development,
+    Lang \== 'c++'.
+
