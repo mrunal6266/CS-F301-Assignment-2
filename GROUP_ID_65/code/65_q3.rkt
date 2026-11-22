@@ -49,3 +49,18 @@
   (if (null? tree)
       0
       (+ 1 (max (tree-height (cadr tree)) (tree-height (caddr tree))))))
+
+; leaves of () onto acc = acc
+; leaves of a leaf (v () ()) onto acc = acc + 1
+; leaves of (v l r) onto acc = leaves r onto (leaves l onto acc)
+(define (count-leaves-acc tree acc)
+  (cond ((null? tree) acc)
+        ((and (null? (cadr tree)) (null? (caddr tree))) (+ acc 1))
+        (else (count-leaves-acc (caddr tree)
+                                (count-leaves-acc (cadr tree) acc)))))
+
+; count-leaves: number of leaves in tree
+(define (count-leaves tree)
+  (count-leaves-acc tree 0))
+
+
