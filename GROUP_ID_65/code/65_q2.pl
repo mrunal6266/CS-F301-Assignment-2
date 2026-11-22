@@ -86,3 +86,23 @@ generate_equation(List, Equation) :-
            expr_string(Right, RightStr),
            format(string(Equation), "~w=~w", [LeftStr, RightStr])
          )).
+
+% all_equations(+List, -Equations)
+% Equations is the sort/2-ordered list, without duplicates, of the canonical
+% strings "L=R" of all valid equations for List. It is [] if there are none,
+% including for lists of length 0 and 1.
+all_equations(List, Equations) :-
+    findall(Equation,
+            ( append(Prefix, Suffix, List),
+              Prefix = [_|_],
+              Suffix = [_|_],
+              expr_tree(Prefix, Left),
+              eval(Left, Value),
+              expr_tree(Suffix, Right),
+              eval(Right, Value),
+              expr_string(Left, LeftStr),
+              expr_string(Right, RightStr),
+              format(string(Equation), "~w=~w", [LeftStr, RightStr])
+            ),
+            Found),
+    sort(Found, Equations).
